@@ -7,6 +7,8 @@
 
 ### Demo
 
+[http://artminister.com/build/backbone-faceted-search/build/](http://artminister.com/build/backbone-faceted-search/build/)
+
 Download and open build files
 
 ### Inspiration

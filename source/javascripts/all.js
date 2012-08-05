@@ -281,7 +281,7 @@ $(function(){
 	    
 	    // Loop Through all the Facets and Update Count
 	    
-	    log(results);
+	    //log(results);
 	    
 	    
 	    
