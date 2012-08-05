@@ -265,7 +265,7 @@ $(function(){
 	    var $facet = $(Facetview.el),
 	        $facets = $facet.find('li');
 	        
-	    $facets.removeClass("active");
+	    $facets.removeClass("active").removeClass("disabled");
 	    
 	    _.each(params, function(val, key){
 
@@ -290,6 +290,9 @@ $(function(){
 	  
 	  index: function(){
 	    new APP.view.ItemView({model: itemcollection}).render();
+	    
+	    $(Facetview.el).find('li').removeClass("active disabled");
+	    
 	  }
 	  
 	
