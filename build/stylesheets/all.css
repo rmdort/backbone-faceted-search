@@ -5,8 +5,18 @@
   float: left;
   width: 30%;
 }
+#Facets a {
+  display: block;
+}
 #Items li {
   display: inline-block;
   vertical-align: top;
   margin: 0 10px 10px 0;
+}
+.active {
+  background-color: red;
+  color: #fff;
+}
+.disabled {
+  opacity: 0.5;
 }

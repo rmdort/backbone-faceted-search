@@ -4,12 +4,14 @@ function log(msg){ if((window.console && console.log)) console.log(msg) };
 
 function getUrlVars()
 {
-    var vars = [], hash;
+    var vars = {}, hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
     for(var i = 0; i < hashes.length; i++)
     {
         hash = hashes[i].split('=');
-        vars.push(hash[0]);
+        //vars.push(hash[0]);
+        //vars[hash[0]] = hash[1];
+        
         vars[hash[0]] = hash[1];
     }
     return vars;
@@ -44,23 +46,31 @@ $(function(){
 	// Create a Item Collection
 	
 	APP.collection.ItemCollection = Backbone.Collection.extend({
+	  
 	  model: APP.model.Item,
 	  
 	  url: 'javascripts/items.json',
 	  
-	  search: function(param, category){
-
-	    if(param == "") return this;
+	  search: function(params){
 	    
-	    var pattern = new RegExp(param, "gi");
-	    	    
-	    return _(this.filter(function(doc){        
-        pattern.lastIndex= 0; // Reset the last Index
-        return pattern.test(doc.get(category));
-        
-        
-      }));
-      
+	    var arr = {};
+	    
+	    var self = this,
+	        newcollection = this;
+	    
+	    _.each(params, function(val, key){
+	      
+	      var pattern = new RegExp(val, "gi")
+	      
+	      newcollection = _(newcollection.filter(function(doc){        
+          pattern.lastIndex= 0; // Reset the last Index          
+          return pattern.test(doc.get(key));        
+        }));
+	      
+	    });
+	    
+	    return newcollection;
+
 	  },
 	  
 	  searchFacet: function(category){
@@ -182,11 +192,42 @@ $(function(){
 	    
 	    // To add mutliple query vars to the URL
 	      
-	      var $this = $(e.target),
-	          _category = $this.parent().data("facet-category"),
-	          _name = $this.parent().data('facet-name');
-
-	      window.location.hash="search?"+_category+"="+_name;
+	      var self = this,
+	          $this = $(e.target),
+	          $parent = $this.parent(),
+	          _category = $parent.data("facet-category"),
+	          _name = $parent.data('facet-name'),
+	          _thisHash = $this.attr("href");
+	      
+	      if($parent.hasClass('active')){
+	        
+	        $parent.removeClass("active").siblings().removeClass("disabled");
+	        
+	      }else{
+	       
+	       $parent.siblings().removeClass("active").addClass("disabled").end().addClass("active").removeClass("disabled");
+	        
+	      }	      	      
+	      
+	      // Loop Through all Active Facets
+	      
+	      var _hash = [];
+	      
+	      $(self.el).find('.active').each(function(){
+	        
+	        var ele = $(this),
+	            category = ele.data("facet-category"),
+	            name = ele.data("facet-name");
+	        
+	        _hash.push(category+"="+escape(name));
+	            
+	      });
+	      if(_hash.length){
+	        window.location.hash="search?"+_hash.join('&');
+	      }else{
+	        window.location.hash="";
+	      }
+	      	      	      
 
 	    e.preventDefault();
 	  }
@@ -215,42 +256,40 @@ $(function(){
 	  filterFacet: function(params){
 	    
 	    var self = this,
-	        _collection = itemcollection;
+	        results = itemcollection.search(params);
 	    
-      _.each(params, function(val, key){        
-
-        var _found = _.filter(self._cache, function(cache_val, cache_key){
-  	        return cache_val.facet == key && cache_val.name == val;  	          	        
-  	    });
-
-        if(!_found.length) {
-          _collection = itemcollection.search(val, key);
-
-          self._cache.push(arrayCache(key, val, _collection ));          
-        }else{
-          
-          _collection = _found[0].items;
-        }
-        
-        //log(self._cache[0].items.toArray());
-        
-        new APP.view.ItemView({model: _collection }).render()
-        
-        
-        
-        //log(self._cache);
-        
-        //
-        
-      });
-	    //new APP.view.ItemView({model: itemcollection.search(facet, category) }).render();
+	    new APP.view.ItemView({model: results }).render();
 	    
-	    //log(self._cache);
+	    // Update Class in facets
+	    
+	    var $facet = $(Facetview.el),
+	        $facets = $facet.find('li');
+	        
+	    $facets.removeClass("active");
+	    
+	    _.each(params, function(val, key){
+
+	      $facets.filter(function(i, ele){
+	        return $(ele).data("facet-category") == key && $(ele).data("facet-name") == val;
+	      })
+	      .addClass("active")
+	      .siblings()
+	      .addClass("disabled");
+	      
+	    });
+	    
+	    
+	    // Loop Through all the Facets and Update Count
+	    
+	    log(results);
+	    
+	    
+	    
 	    
 	  },
 	  
 	  index: function(){
-	    
+	    new APP.view.ItemView({model: itemcollection}).render();
 	  }
 	  
 	
