@@ -1,0 +1,13 @@
+[{
+ "category" : "category",
+ "heading" : "What Category"
+ },
+ {
+  "category" : "continent",
+  "heading" : "Which Continent"
+  },
+  {
+   "category" : "language",
+   "heading" : "Programming Language"
+   }
+]

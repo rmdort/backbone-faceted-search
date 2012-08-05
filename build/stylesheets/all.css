@@ -1,0 +1,12 @@
+#Facets {
+  overflow: hidden;
+}
+#Facets .column {
+  float: left;
+  width: 30%;
+}
+#Items li {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px 10px 0;
+}
