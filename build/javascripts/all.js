@@ -46,7 +46,7 @@ $(function(){
 	APP.collection.ItemCollection = Backbone.Collection.extend({
 	  model: APP.model.Item,
 	  
-	  url: '/javascripts/items.json',
+	  url: 'javascripts/items.json',
 	  
 	  search: function(param, category){
 
