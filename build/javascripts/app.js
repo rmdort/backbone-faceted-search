@@ -51,7 +51,9 @@
             
       new App.views.pubView({
         collection: this.publications
-      });            
+      });
+      
+      $('.facet').removeClass('active disabled');            
       
     },
     
