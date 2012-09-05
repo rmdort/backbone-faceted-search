@@ -1,4 +1,22 @@
-[
+{
+"facets": [
+  {
+    "facet": "language",
+    "heading": "Which Language",
+    "sort_order": ""        
+  },
+  {
+    "facet": "continent",
+    "heading": "Which Continent",
+    "sort_order": ""    
+  },
+  {
+    "facet": "category",
+    "heading": "Which Animal",
+    "sort_order": ""    
+  }
+],
+"publications": [
   {
     "firstname": "Mary",
     "lastname": "Smith",
@@ -899,3 +917,4 @@
     "continent": "North America"
   }
 ]
+}

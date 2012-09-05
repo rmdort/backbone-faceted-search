@@ -2,27 +2,48 @@
 <html>
   <head>
     <meta charset="utf-8">
+    
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <title><%= data.page.title || "The Middleman" %></title>    
-    <%= stylesheet_link_tag "normalize", "all" %>    
+    
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= data.page.title || "The Middleman" %></title>
+    
+    <%= stylesheet_link_tag "normalize", "all" %>
+    
+    
   </head>
   
   <body class="<%= page_classes %>">
     <%= yield %>
-    
-    
-    
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <%= javascript_include_tag  "jquery.tmpl.min", "underscore-1.1.7", "backbone", "backbone.queryparam", "all" %>
-    
-    <script type="text/template" id='document_template'>
-      <li class="menu-item">
-            <h4>${ attributes.firstname + ' ' + attributes.lastname }</h4>
-            <p><img src="${ attributes.imageURL }" alt=""></p>
-      </li>
-    </script>
-
-
+  
+  
+  <!-- Templates -->
+  <script type="t/template" id="publication_template">
+    {{@publications}}
+    <li>
+      <h3>{{=_val.firstname}} {{=_val.lastname}}</h3> 
+      <p><img src="{{=_val.imageURL}}" alt="{{=_val.firstname}}"></p>
+    </li>
+    {{/@publications}}
+  </script>
+  <!-- / Templates -->
+  
+  <script type="t/template" id="facet_template">
+    <li>
+      <h3>{{=heading}}</h3>
+      <ul>
+        {{@values}}
+          <li>
+            <a class="facet" data-facet="{{=topic}}" data-facet-name="{{=_val}}" href="#search?{{=topic}}={{=_val}}">{{=_val}}</a>
+          </li>
+        {{/@values}}
+      </ul>
+    </li>
+  </script>
+  
+  <%= javascript_include_tag  "lib/jquery.1.4.2.min", "lib/underscore", "lib/backbone" %>
+  <%= javascript_include_tag "lib/t", "lib/backbone.queryparam", "models/publication", "views/facets", "views/publication", "app" %>
+  
   </body>
 </html>
