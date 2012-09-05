@@ -1,7 +1,10 @@
+### Done
+
+* Multiple Facet Support (Done)
+* Better Filtering (Done)
+
 ### To do
 
-* Multiple Facet Support
-* Better Filtering
 * Keyword Support
 * Caching
 
@@ -10,7 +13,3 @@
 [http://artminister.com/build/backbone-faceted-search/build/](http://artminister.com/build/backbone-faceted-search/build/)
 
 Download and open build files
-
-### Inspiration
-
-[https://github.com/eikes/facetedsearch/](https://github.com/eikes/facetedsearch/)
