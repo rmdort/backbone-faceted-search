@@ -133,17 +133,21 @@
     
     search: function(params){
       
-	    var newcollection = this.publications;
+	    var newcollection = this.publications,
+	        self = this;
       
       if(_.size(params)){
         
         _.each(params, function(val, key){
-
-  	      var pattern = new RegExp(val, "gi")
+          
+          val = self.escapeRegex(val);
+          
+  	      var pattern = new RegExp(val, "i")
 
   	      newcollection = newcollection.filter(function(doc){        
             pattern.lastIndex= 0; // Reset the last Index          
             return pattern.test(doc.get(key));        
+            
           });
 
   	    });
@@ -153,6 +157,11 @@
       else return newcollection;
       
             
+    },
+    
+    escapeRegex: function(value){
+      
+      return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     },
     
     updateText: function(values){
