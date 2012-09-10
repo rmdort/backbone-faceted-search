@@ -6,8 +6,8 @@
   App.router.searchRouter = Backbone.Router.extend({
     
     routes: {
-      ''      : 'index',
-      'search': 'filterResults'
+      '!/'      : 'index',
+      '!/search': 'filterResults'
     },
     
     initialize: function(){
@@ -101,7 +101,7 @@
       });
       
       _availableFacets.push(_paramsValueArray);
-      _availableFacets = _.flatten(_availableFacets);
+      _availableFacets = _.flatten(_availableFacets); 
       
       var $f = $facets.removeClass("disabled").filter(function(i, k){
         

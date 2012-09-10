@@ -98,9 +98,9 @@ App.views.facetView = Backbone.View.extend({
         });
 
         if(_hash.length){
-          window.location.hash="search?"+_hash.join('&');
+          window.location.hash="!/search?"+_hash.join('&');
         }else{
-          window.location.hash="search";
+          window.location.hash="!/";
         }
         
     }
