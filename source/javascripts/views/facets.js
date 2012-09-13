@@ -63,9 +63,9 @@ App.views.facetView = Backbone.View.extend({
         $this = $(e.target),
         $parent = $this.parent();
         
-    if(!$this.is('.disabled')){
-          
-        if($this.is('.active')){
+    if(!$this.hasClass('disabled')){
+        
+        if($this.hasClass('active')){
   
           $this.removeClass("active");
   
@@ -75,9 +75,11 @@ App.views.facetView = Backbone.View.extend({
           $parent
             .siblings()
             .find('.facet')
-            .removeClass("active")
-            .end()
-            .end()
+            .removeClass("active");
+          
+          // Added Zepto Support : Removed: end()
+          
+          $parent
             .find('.facet')
             .addClass("active");
         
@@ -88,7 +90,7 @@ App.views.facetView = Backbone.View.extend({
         var _hash = [];
 
         self.$el.find('.active').each(function(){
-
+          
           var ele = $(this),
               category = ele.attr("data-facet"),
               name = ele.attr("data-facet-name");
