@@ -51,7 +51,7 @@ App.views.facetView = Backbone.View.extend({
       
     }));
     
-    return _.uniq(_.flatten(_array).sort());
+    return _.uniq(_.flatten(_array)).sort();
     
   },
   
