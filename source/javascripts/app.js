@@ -103,23 +103,35 @@
       _availableFacets.push(_paramsValueArray);
       _availableFacets = _.flatten(_availableFacets); 
       
-      var $f = $facets.removeClass("disabled").filter(function(i, k){
-        
-        return _.indexOf(_availableFacets, $(this).text()) == -1? true: false;
-        
-      }).addClass("disabled");
+      // Remove All disabled class
       
+      $facets.removeClass("disabled");
+      
+      var _facets = _.filter($facets, function(i, k){
+
+        return _.indexOf(_availableFacets, $(i).text()) == -1? true: false;
+        
+      });
+      
+      // Add Disabled Class for unavailable Facets
+      
+      $(_facets).addClass("disabled");
       
       // Add Active Class to Selected Items on Page Load
       
       if(_paramsValueArray.length){
-      
+                
+          $facets.removeClass("active");
           
-          var $f = $facets.removeClass("active").filter(function(){
+          var _facets = _.filter($facets, function(i, k){
           
-            return _.indexOf(_paramsValueArray, $(this).text()) != -1? true: false
+            return _.indexOf(_paramsValueArray, $(i).text()) != -1? true: false
           
-          }).addClass("active");
+          });
+          
+          // Add Active Class to Selected Facet
+          
+          $(_facets).addClass("active");
           
       
       }
@@ -184,4 +196,4 @@
   
     
   
-})(jQuery, window);
+})($, window);
